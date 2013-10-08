@@ -4,7 +4,7 @@
   "description": "Metro-style tiling UI implemented in CSS",
   "main": "coffee/tyler.coffee",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "napa timjansen/sparkplug.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +16,7 @@
     "url": "https://github.com/eighttrackmind/tyler/issues"
   },
   "dependencies": {
-    "color-scheme": "0.0.5"
+    "color-scheme": "0.0.5",
+    "napa": "~0.1.1"
   }
 }
