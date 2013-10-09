@@ -28,6 +28,7 @@
 				tile: 'tile'
 				tileBig: 'tile-big'
 				tileSmall: 'tile-small'
+				tileFlipped: 'flipped'
 
 			tagName: 'div'
 			columns: 2
@@ -48,9 +49,45 @@ Compute the layout
 
 			layout = @layout data
 
-... And render it!
+Render it
 
 			@render layout, element
+
+Attach DOM events
+
+			@addEventListeners()
+
+		addEventListeners: ->
+
+			document.addEventListener 'click', (event) =>
+
+				tile = @getTile event
+
+				if tile
+
+					tile.classList.toggle @options.classNames.tileFlipped
+
+		getTile: (event) ->
+
+			target = event.target
+
+			if @isTile target
+
+				return target
+
+			else
+
+				while target = target.parentNode
+
+					if @isTile target
+
+						return target
+
+			undefined
+
+		isTile: (element) ->
+
+			element.classList.contains @options.classNames.tile
 
 ## setCSS
 

@@ -1,17 +1,40 @@
 .tile-cell
 	float left
-	// height 300px
-	// width 300px
 
 .tile
 	float left
+	-webkit-perspective 1000
+	-webkit-transition -webkit-transform 1s linear
+
+	&.flipped
+		-webkit-transform: rotateX(180deg)
 
 .tile-big
-	background red
 	height 100%
 	width 100%
 
+	.tile-front
+		background red
+
 .tile-small
-	background blue
 	height 50%
 	width 50%
+
+	.tile-front
+		background blue
+
+.tile-front
+.tile-back
+	bottom 0
+	left 0
+	position absolute
+	right 0
+	top 0
+	-webkit-backface-visibility hidden
+
+.tile-front
+	z-index 2
+
+.tile-back
+	background #333
+	-webkit-transform: rotateX(180deg)
