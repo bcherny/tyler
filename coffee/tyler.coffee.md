@@ -1,4 +1,8 @@
 
+# Tyler
+
+## _ (helpers)
+
 	_ =
 
 		extend: (obj, others...) ->
@@ -10,7 +14,11 @@
 
 			obj
 
+## Tyler
+
 	class Tyler
+
+## default options
 
 		options:
 
@@ -23,6 +31,8 @@
 
 			tagName: 'div'
 			columns: 2
+
+## initialize
 
 		constructor: (data, element, options) ->
 
@@ -42,25 +52,34 @@ Compute the layout
 
 			@render layout, element
 
+## setCSS
+
 Tiles should be square, and exactly **two** big ones should fit side-by-side. That number can be overwritten in `options.columns`. See http://stackoverflow.com/a/707794/435124 for how CSS rule insertion works.
 
 		setCSS: ->
 
-			size = Math.min window.innerHeight, window.innerWidth
-			half = size / @options.columns
+Compute 
+
+			size = window.innerWidth / @options.columns
 			sheet = document.styleSheets[0]
 			rule = """
 				.#{@options.classNames.cell} {
-					height: #{half}px
-					width: #{half}px
+					height: #{size}px;
+					width: #{size}px;
 				}
 			"""
 			
 			sheet.insertRule rule, sheet.cssRules.length
 
+## layout
+Compute layout according to our parameters, filtered through a bayesian distribution.
+
 		layout: (data) ->
 
 			[]
+
+## render
+Render tiles in the DOM
 
 		render: (layout, element) ->
 
