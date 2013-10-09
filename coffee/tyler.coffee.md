@@ -54,13 +54,16 @@ Compute the layout
 
 ## setCSS
 
-Tiles should be square, and exactly **two** big ones should fit side-by-side. That number can be overwritten in `options.columns`. See http://stackoverflow.com/a/707794/435124 for how CSS rule insertion works.
+Tiles should be square, and exactly **two** big ones should fit side-by-side. That number can be overwritten in `options.columns`.
 
 		setCSS: ->
 
 Compute 
 
 			size = window.innerWidth / @options.columns
+
+Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule insertion works.
+
 			sheet = document.styleSheets[0]
 			rule = """
 				.#{@options.classNames.cell} {
