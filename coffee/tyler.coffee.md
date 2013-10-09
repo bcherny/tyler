@@ -14,6 +14,19 @@
 
 			obj
 
+	template = (data) ->
+
+		"""
+			<div class="tile-cell">
+				<div class="tile tile-#{data.size}">
+					<div class="tile-inner">
+						<div class="tile-front sex-#{data.sex}"></div>
+						<div class="tile-back"></div>
+					</div>
+				</div>
+			</div>
+		"""
+
 ## Tyler
 
 	class Tyler
@@ -59,13 +72,16 @@ Attach DOM events
 
 		addEventListeners: ->
 
-			document.addEventListener 'click', (event) =>
+			document.addEventListener 'click', @click
+			document.addEventListener 'touchstart', @click
 
-				tile = @getTile event
+		click: (event) =>
 
-				if tile
+			tile = @getTile event
 
-					tile.classList.toggle @options.classNames.tileFlipped
+			if tile
+
+				tile.classList.toggle @options.classNames.tileFlipped
 
 		getTile: (event) ->
 
@@ -77,7 +93,7 @@ Attach DOM events
 
 			else
 
-				while target = target.parentNode
+				while (target = target.parentNode) and target isnt document
 
 					if @isTile target
 
@@ -128,7 +144,8 @@ Render tiles in the DOM
 				html = ''
 
 				for item in layout
-					html += '<#{@options.tagName} class="#{@options.className}" style="height:#{item.height}px;width:#{item.width}px;left:#{item.left}px;top:#{item.top}px;"></#{@options.tagName}>'
+					html += template _.extend item,
+						size: 'big'
 
 				element.innerHTML = html
 
