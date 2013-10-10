@@ -1,7 +1,11 @@
 
 # Tyler
 
-## _ (helpers)
+## requires
+
+	ColorScheme = require 'ColorScheme'
+
+## helpers
 
 	_ =
 
@@ -14,13 +18,31 @@
 
 			obj
 
+		sortBy: (array, property) ->
+
+			number = typeof array[0][property] is 'number'
+
+			_sortAlpha = (property) ->
+				(a, b) -> a[property].localeCompare b[property]
+			_sortNumeric = (property) ->
+				(a, b) -> a[property] < b[property]
+
+			fn = (if number then _sortNumeric else _sortAlpha) property
+
+			array.sort fn
+
+		rand: (array) ->
+
+			index = Math.floor Math.random() * array.length
+			array[index]
+
 	template = (data) ->
 
 		"""
 			<div class="tile-cell">
 				<div class="tile tile-#{data.size}">
 					<div class="tile-inner">
-						<div class="tile-front sex-#{data.sex}"></div>
+						<div class="tile-front sex-#{data.sex}" style="background:##{data.color}">#{data.name}</div>
 						<div class="tile-back"></div>
 					</div>
 				</div>
@@ -132,7 +154,7 @@ Compute layout according to our parameters, filtered through a bayesian distribu
 
 		layout: (data) ->
 
-			[]
+			_.sortBy data, 'weight'
 
 ## render
 Render tiles in the DOM
@@ -141,11 +163,27 @@ Render tiles in the DOM
 
 			if layout.length
 
+				color = new ColorScheme
+				colors = color
+					.from_hue(230)
+					.scheme('mono')
+					.variation('hard')
+					.colors()
 				html = ''
 
 				for item in layout
-					html += template _.extend item,
-						size: 'big'
+
+					rand = Math.rand
+
+					if rand > .7
+						html += template _.extend item,
+							color: _.rand colors
+							size: 'big'
+
+					else
+						html += template _.extend item,
+							color: _.rand colors
+							size: 'big'
 
 				element.innerHTML = html
 
