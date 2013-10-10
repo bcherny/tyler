@@ -200,7 +200,7 @@ Define CSS transition based on `options`
 					.#{@options.classNames.tileInner} {
 						-webkit-transition: all #{@options.animation.duration}ms #{@options.animation.fn}
 					}
-				""",
+				"""
 
 Define big tile size
 
@@ -209,7 +209,7 @@ Define big tile size
 						height: #{size}px;
 						width: #{size}px;
 					}
-				""",
+				"""
 
 Define small tile size
 
@@ -218,7 +218,7 @@ Define small tile size
 						height: #{size / 2}px;
 						width: #{size / 2}px;
 					}
-				""",
+				"""
 
 Define flipped (expanded) tile size
 
