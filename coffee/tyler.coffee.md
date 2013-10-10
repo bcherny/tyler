@@ -40,6 +40,8 @@
 
 			template.call data
 
+## Template for tiles
+
 	template = ->
 
 		"""
@@ -196,24 +198,36 @@ Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule
 
 			sheet = document.styleSheets[0]
 			rules = [
+
+Define CSS transition based on `options`
+
 				"""
 					.#{@options.classNames.tile},
 					.#{@options.classNames.tileInner} {
 						-webkit-transition: all #{@options.animation.duration}ms #{@options.animation.fn}
 					}
 				""",
+
+Define big tile size
+
 				"""
 					.#{@options.classNames.tileBig} {
 						height: #{size}px;
 						width: #{size}px;
 					}
 				""",
+
+Define small tile size
+
 				"""
 					.#{@options.classNames.tileSmall} {
 						height: #{size / 2}px;
 						width: #{size / 2}px;
 					}
 				""",
+
+Define flipped (expanded) tile size
+
 				"""
 					.#{@options.classNames.tileFlipped} {
 						height: #{height}px;
@@ -221,6 +235,8 @@ Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule
 					}
 				"""
 			]
+
+Append rules to stylesheet
 			
 			for rule in rules
 				sheet.insertRule rule, sheet.cssRules.length
@@ -242,11 +258,14 @@ Compute layout according to our parameters, filtered through a bayesian distribu
 				_.extend tile, datum
 
 ## render
+
 Render tiles in the DOM
 
 		render: (layout, element) ->
 
 			if layout.length
+
+Generate colors for tiles
 
 				color = new ColorScheme
 				colors = color
