@@ -1,6 +1,9 @@
 .tile-cell
 	float left
 
+	&.focus
+		z-index 3
+
 .tile
 	float left
 	-webkit-backface-visibility hidden
@@ -11,8 +14,9 @@
 
 		.tile-inner
 			//width: 200%
-			//z-index 4
-			-webkit-transform: rotateX(180deg)
+			z-index 4
+			-webkit-animation Enlarge 1s 1 0
+			-webkit-transform rotateX(180deg)
 
 .tile-big
 	height 100%

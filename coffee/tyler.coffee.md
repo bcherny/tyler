@@ -60,6 +60,7 @@
 			classNames:
 
 				cell: 'tile-cell'
+				cellFocused: 'focus'
 				tile: 'tile'
 				tileBig: 'tile-big'
 				tileSmall: 'tile-small'
@@ -103,7 +104,19 @@ Attach DOM events
 
 			if tile
 
+				cell = @getCell tile
+
 				tile.classList.toggle @options.classNames.tileFlipped
+				cell.classList.toggle @options.classNames.cellFocused
+
+
+		getCell: (tile) ->
+
+			while tile = tile.parentNode
+
+				if @isCell tile
+
+					return tile
 
 		getTile: (event) ->
 
@@ -121,7 +134,9 @@ Attach DOM events
 
 						return target
 
-			undefined
+		isCell: (element) ->
+
+			element.classList.contains @options.classNames.cell
 
 		isTile: (element) ->
 
@@ -134,20 +149,49 @@ Tiles should be square, and exactly **two** big ones should fit side-by-side. Th
 		setCSS: ->
 
 Compute 
-
-			size = window.innerWidth / @options.columns
+			
+			height = window.innerHeight
+			width = window.innerWidth
+			size = width / @options.columns
 
 Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule insertion works.
 
 			sheet = document.styleSheets[0]
-			rule = """
-				.#{@options.classNames.cell} {
-					height: #{size}px;
-					width: #{size}px;
-				}
-			"""
+			rules = [
+				"""
+					.#{@options.classNames.cell} {
+						height: #{size}px;
+						width: #{size}px;
+					}
+				""",
+				"""
+					@-webkit-keyframes Enlarge {
+						from {
+							height: #{size}px;
+							width: #{size}px;
+						}
+						to {
+							height: #{height}px;
+							width: #{width}px;
+						}
+					}
+				""",
+				"""
+					@-webkit-keyframes Reduce {
+						from {
+							height: #{height}px;
+							width: #{width}px;
+						}
+						to {
+							height: #{size}px;
+							width: #{size}px;
+						}
+					}
+				"""
+			]
 			
-			sheet.insertRule rule, sheet.cssRules.length
+			for rule in rules
+				sheet.insertRule rule, sheet.cssRules.length
 
 ## layout
 Compute layout according to our parameters, filtered through a bayesian distribution.
