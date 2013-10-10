@@ -1,10 +1,5 @@
-.tile-cell
-	position absolute
-
-	&.focus
-		z-index 3
-
 .tile
+	position absolute
 	-webkit-backface-visibility hidden
 	-webkit-perspective 1000
 
@@ -12,32 +7,14 @@
 		z-index 3
 
 		.tile-inner
-			height 300%
-			width 200%
 			z-index 4
-			//-webkit-animation Enlarge 1s 1 0
 			-webkit-transform rotateX(180deg)
-
-.tile-big
-	height 100%
-	width 100%
-
-	.tile-front
-		background red
-
-.tile-small
-	height 50%
-	width 50%
-
-	.tile-front
-		background blue
 
 .tile-inner
 	height 100%
 	position relative
 	width 100%
 	-webkit-transform-style preserve-3d
-	-webkit-transition all .5s linear
 
 .tile-front
 .tile-back

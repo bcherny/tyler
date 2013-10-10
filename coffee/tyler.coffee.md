@@ -43,12 +43,10 @@
 	template = ->
 
 		"""
-			<div class="tile-cell" style="left:#{@x}px;top:#{@y}px">
-				<div class="tile tile-#{@size}">
-					<div class="tile-inner">
-						<div class="tile-front sex-#{@sex}" style="background:##{@color}">#{@name}</div>
-						<div class="tile-back"></div>
-					</div>
+			<div class="tile tile-#{@size}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
+				<div class="tile-inner">
+					<div class="tile-front sex-#{@sex}" style="background:##{@color}">#{@name}</div>
+					<div class="tile-back"></div>
 				</div>
 			</div>
 		"""
@@ -61,17 +59,32 @@
 
 		options:
 
+Number of big tiles that should fit side-by-side 
+
+			columns: 2
+
+### Classes for DOM elements
+
 			classNames:
 
-				cell: 'tile-cell'
 				cellFocused: 'focus'
 				tile: 'tile'
 				tileBig: 'tile-big'
 				tileSmall: 'tile-small'
 				tileFlipped: 'flipped'
+				tileInner: 'tile-inner'
 
-			tagName: 'div'
-			columns: 2
+### Animation options
+
+			animation:
+
+Duration, in milliseconds
+
+				duration: 500
+
+CSS transition timing function, see http://www.w3.org/TR/css3-transitions/#single-transition-timing-function
+
+				fn: 'ease-out'
 
 ## initialize
 
@@ -102,25 +115,38 @@ Attach DOM events
 			document.addEventListener 'click', @click
 			document.addEventListener 'touchstart', @click
 
+## Click
+
+Triggered when a tile is clicked/tapped
+
 		click: (event) =>
 
 			tile = @getTile event
 
 			if tile
 
-				cell = @getCell tile
+				style = tile.style
 
 				tile.classList.toggle @options.classNames.tileFlipped
-				cell.classList.toggle @options.classNames.cellFocused
 
+				if tile.classList.contains @options.classNames.tileFlipped
 
-		getCell: (tile) ->
+Align it with the top left of the viewport
 
-			while tile = tile.parentNode
+					left = document.body.scrollLeft - tile.offsetLeft
+					top = document.body.scrollTop - tile.offsetTop
 
-				if @isCell tile
+					style.webkitTransform = "translate3d(#{left}px,#{top}px,0)"
 
-					return tile
+Or reset if previously aligned
+
+				else
+
+					style.webkitTransform = 'translate3d(0,0,0)'
+
+## getTile
+
+A helper for click events. Gets a tile DOMElement from the event's target.
 
 		getTile: (event) ->
 
@@ -138,9 +164,9 @@ Attach DOM events
 
 						return target
 
-		isCell: (element) ->
+## isTile
 
-			element.classList.contains @options.classNames.cell
+Checks if a DOMElement is a tile.
 
 		isTile: (element) ->
 
@@ -171,33 +197,27 @@ Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule
 			sheet = document.styleSheets[0]
 			rules = [
 				"""
-					.#{@options.classNames.cell} {
+					.#{@options.classNames.tile},
+					.#{@options.classNames.tileInner} {
+						-webkit-transition: all #{@options.animation.duration}ms #{@options.animation.fn}
+					}
+				""",
+				"""
+					.#{@options.classNames.tileBig} {
 						height: #{size}px;
 						width: #{size}px;
 					}
 				""",
 				"""
-					@-webkit-keyframes Enlarge {
-						from {
-							height: #{size}px;
-							width: #{size}px;
-						}
-						to {
-							height: #{height}px;
-							width: #{width}px;
-						}
+					.#{@options.classNames.tileSmall} {
+						height: #{size / 2}px;
+						width: #{size / 2}px;
 					}
 				""",
 				"""
-					@-webkit-keyframes Reduce {
-						from {
-							height: #{height}px;
-							width: #{width}px;
-						}
-						to {
-							height: #{size}px;
-							width: #{size}px;
-						}
+					.#{@options.classNames.tileFlipped} {
+						height: #{height}px;
+						width: #{width}px;
 					}
 				"""
 			]
@@ -214,9 +234,12 @@ Compute layout according to our parameters, filtered through a bayesian distribu
 
 			for tile, n in data
 
-				_.extend tile,
+				datum =
+					id: n
 					x: @sizes.tile * (n % 2)
 					y: @sizes.tile * Math.floor(n / @options.columns)
+
+				_.extend tile, datum
 
 ## render
 Render tiles in the DOM
