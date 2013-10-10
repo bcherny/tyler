@@ -154,17 +154,11 @@ A helper for click events. Gets a tile DOMElement from the event's target.
 
 			target = event.target
 
-			if @isTile target
+			while target isnt document
 
-				return target
+				return target if @isTile target
 
-			else
-
-				while (target = target.parentNode) and target isnt document
-
-					if @isTile target
-
-						return target
+				target = target.parentNode
 
 ## isTile
 
