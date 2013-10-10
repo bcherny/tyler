@@ -13,7 +13,7 @@
 
 			if obj and others
 				for other in others
-					for key of other
+					for own key of other
 						obj[key] = other[key]
 
 			obj
@@ -36,13 +36,17 @@
 			index = Math.floor Math.random() * array.length
 			array[index]
 
-	template = (data) ->
+		template: (template, data = {}) ->
+
+			template.call data
+
+	template = ->
 
 		"""
-			<div class="tile-cell">
-				<div class="tile tile-#{data.size}">
+			<div class="tile-cell" style="left:#{@x}px;top:#{@y}px">
+				<div class="tile tile-#{@size}">
 					<div class="tile-inner">
-						<div class="tile-front sex-#{data.sex}" style="background:##{data.color}">#{data.name}</div>
+						<div class="tile-front sex-#{@sex}" style="background:##{@color}">#{@name}</div>
 						<div class="tile-back"></div>
 					</div>
 				</div>
@@ -154,6 +158,14 @@ Compute
 			width = window.innerWidth
 			size = width / @options.columns
 
+Store sizes for `@layout` computations
+
+			@sizes =
+				tile: size
+				window:
+					height: height
+					width: width
+
 Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule insertion works.
 
 			sheet = document.styleSheets[0]
@@ -200,6 +212,12 @@ Compute layout according to our parameters, filtered through a bayesian distribu
 
 			_.sortBy data, 'weight'
 
+			for tile, n in data
+
+				_.extend tile,
+					x: @sizes.tile * (n % 2)
+					y: @sizes.tile * Math.floor(n / @options.columns)
+
 ## render
 Render tiles in the DOM
 
@@ -220,12 +238,12 @@ Render tiles in the DOM
 					rand = Math.rand
 
 					if rand > .7
-						html += template _.extend item,
+						html += _.template template, _.extend item,
 							color: _.rand colors
 							size: 'big'
 
 					else
-						html += template _.extend item,
+						html += _.template template, _.extend item,
 							color: _.rand colors
 							size: 'big'
 
