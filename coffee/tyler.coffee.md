@@ -47,7 +47,8 @@
 		"""
 			<div class="tile tile-#{@size}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
 				<div class="tile-inner">
-					<div class="tile-front sex-#{@sex}" style="background:##{@color}">#{@name}</div>
+					<div class="tile-front sex-#{@sex}" style="background-color:##{@color};background-image:url(#{@pic})"><span class="name">#{@name}</span>
+					</div>
 					<div class="tile-back"></div>
 				</div>
 			</div>
@@ -115,7 +116,7 @@ Attach DOM events
 		addEventListeners: ->
 
 			document.addEventListener 'click', @click
-			document.addEventListener 'touchstart', @click
+			document.addEventListener 'touchend', @click
 
 ## Click
 

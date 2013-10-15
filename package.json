@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "color-scheme": "0.0.5",
-    "napa": "~0.1.1"
+    "napa": "~0.1.1",
+    "tranny": "0.0.3"
   }
 }
