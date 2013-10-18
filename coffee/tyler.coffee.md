@@ -141,7 +141,7 @@ Triggered when a tile is clicked/tapped
 
 				if tile
 
-					style = tile.style
+					style = tile.querySelector('.tile-inner').style
 
 					tile.classList.toggle @options.classNames.tileFlipped
 
@@ -149,16 +149,16 @@ Triggered when a tile is clicked/tapped
 
 Align it with the top left of the viewport
 
-						left = document.body.scrollLeft - tile.offsetLeft
-						top = document.body.scrollTop - tile.offsetTop
+						left = tile.offsetLeft - document.body.scrollLeft
+						top = tile.offsetTop - document.body.scrollTop
 
-						style.webkitTransform = "translate3d(#{left}px,#{top}px,0)"
+						style.webkitTransform = "rotateX(180deg) translate3d(#{left}px,#{top}px,0)"
 
 Or reset if previously aligned
 
 					else
 
-						style.webkitTransform = 'translate3d(0,0,0)'
+						style.webkitTransform = 'rotateX(0) translate3d(0,0,0)'
 
 ## Move
 
