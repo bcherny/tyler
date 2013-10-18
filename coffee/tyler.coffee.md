@@ -15,6 +15,10 @@
 
 		sortBy: (array, property) ->
 
+			# default to no sort order
+			if not array[0][property]?
+				array[0][property] = 1
+
 			number = typeof array[0][property] is 'number'
 			_alpha = (property) -> (a, b) -> a[property].localeCompare b[property]
 			_numeric = (property) -> (a, b) -> a[property] < b[property]
