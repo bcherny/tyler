@@ -4,6 +4,12 @@ Metro-style tiling UI implemented in CSS (Webkit only!)
 
 ## usage
 
+```js
+new Tyler(data, element, options)
+```
+
+## full example
+
 Add `tyler.css` to your page's `<head>`:
 
 ```html
@@ -44,23 +50,66 @@ Then initialize Tyler with a final `<script>` (be sure to link to it *after* Tyl
 	<script src="dependencies/umodel.js"></script>
 	<script src="tyler.js"></script>
 	<script>
-		var data = [
-			{
-				name: 'Foo',
-				weight: .9
-			},{
-				name: 'Bar',
-				weight: .4
-			},{
-				name: 'Baz',
-				weight: .7
-			}
-		];
-
-		// render Tyler UI into document.body
-		new Tyler(data);
+		new Tyler([
+			{ name: 'Foo', weight: .9 },
+			{ name: 'Bar', weight: .4 },
+			{ name: 'Baz', weight: .7 }
+		]);
 	</script>
 </body>
 </html>
 ```
 
+## options
+
+```js
+options = {
+
+	/*
+		{Number} how many tiles should fit side-by-side
+	 */
+	columns: 2,
+
+	/*
+		{Function} a template that returns a string
+		HTML template for the front of a tile, receives any data from the `data` object passed when Tyler is instantiated
+	 */
+	templateFront: function(){
+		return '<div class="tile-front">' + @foo + '</div>'
+	},
+
+	/*
+		{Function} a template that returns a string
+		HTML template for the back of a tile, receives any data from the `data` object passed when Tyler is instantiated
+	 */
+	templateBack: function(){
+		return '<div class="tile-back">' + @bar + '</div>'
+	},
+
+	classNames: {
+
+		/*
+			{String} class for each tile element
+		 */
+		tile: 'tile'
+
+		/*
+			{String} class appended to a tile element when it's flipped
+		 */
+		tileFlipped: 'flipped'
+
+	},
+
+	animation:
+
+		/*
+			{Number} Flip animation duration, in milliseconds
+		 */
+		duration: 500,
+
+		/*
+			{String} CSS transition timing function for flip animation, see http://www.w3.org/TR/css3-transitions/#single-transition-timing-function
+		 */
+		fn: 'ease-out'
+}
+```

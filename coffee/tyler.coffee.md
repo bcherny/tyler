@@ -43,7 +43,7 @@ Template for tiles
 			templateWrap: ->
 
 				"""
-					<div class="tile" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
+					<div class="#{@classNames.tile}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
 						<div class="tile-inner">
 							#{@front}
 							#{@back}
@@ -58,7 +58,7 @@ Template for tiles
 						<span class="name">#{@name}</span>
 					</div>
 				"""
-				
+
 			templateBack: ->
 
 				"""
@@ -69,10 +69,8 @@ Template for tiles
 
 			classNames:
 
-				cellFocused: 'focus'
 				tile: 'tile'
 				tileFlipped: 'flipped'
-				tileInner: 'tile-inner'
 
 ### Animation options
 
@@ -184,8 +182,7 @@ Define CSS transition based on `options`, tile size based on window dimensions
 
 			rule =
 				"""
-					.#{@options.classNames.tile},
-					.#{@options.classNames.tileInner} {
+					.#{@options.classNames.tile} {
 						height: #{size}px;
 						width: #{size}px;
 						-webkit-transition: all #{@options.animation.duration}ms #{@options.animation.fn}
@@ -234,7 +231,7 @@ Generate tile HTML
 				for item in layout
 					front = _.template @options.templateFront, item
 					back = _.template @options.templateBack, item
-					html += _.template @options.templateWrap, _.extend item,
+					html += _.template @options.templateWrap, _.extend item, @options,
 						front: front
 						back: back
 
