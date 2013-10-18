@@ -4,6 +4,7 @@
 ## requires
 
 	ColorScheme = require 'ColorScheme'
+	#TextWidth = require 'textwidth'
 
 ## helpers
 
@@ -22,12 +23,12 @@
 
 			number = typeof array[0][property] is 'number'
 
-			_sortAlpha = (property) ->
+			_alpha = (property) ->
 				(a, b) -> a[property].localeCompare b[property]
-			_sortNumeric = (property) ->
+			_numeric = (property) ->
 				(a, b) -> a[property] < b[property]
 
-			fn = (if number then _sortNumeric else _sortAlpha) property
+			fn = (if number then _numeric else _alpha) property
 
 			array.sort fn
 
@@ -65,6 +66,10 @@
 Number of big tiles that should fit side-by-side 
 
 			columns: 2
+
+Frequency (in ms) to check for resize, in order to properly adjust fullscreen size
+
+			checkForResizeEvery: 400
 
 ### Classes for DOM elements
 
@@ -113,10 +118,14 @@ Attach DOM events
 
 			@addEventListeners()
 
+			#TextWidth.define 'name', document.querySelector('.name')[0]
+			#console.log TextWidth.get 'name', 'john'
+
 		addEventListeners: ->
 
 			document.addEventListener 'click', @click
 			document.addEventListener 'touchend', @click
+			document.addEventListener 'touchmove', @move
 
 ## Click
 
@@ -124,28 +133,41 @@ Triggered when a tile is clicked/tapped
 
 		click: (event) =>
 
-			tile = @getTile event
+			if @moving
 
-			if tile
+				event.preventDefault()
+				@moving = false
 
-				style = tile.style
+			else
 
-				tile.classList.toggle @options.classNames.tileFlipped
+				tile = @getTile event
 
-				if tile.classList.contains @options.classNames.tileFlipped
+				if tile
+
+					style = tile.style
+
+					tile.classList.toggle @options.classNames.tileFlipped
+
+					if tile.classList.contains @options.classNames.tileFlipped
 
 Align it with the top left of the viewport
 
-					left = document.body.scrollLeft - tile.offsetLeft
-					top = document.body.scrollTop - tile.offsetTop
+						left = document.body.scrollLeft - tile.offsetLeft
+						top = document.body.scrollTop - tile.offsetTop
 
-					style.webkitTransform = "translate3d(#{left}px,#{top}px,0)"
+						style.webkitTransform = "translate3d(#{left}px,#{top}px,0)"
 
 Or reset if previously aligned
 
-				else
+					else
 
-					style.webkitTransform = 'translate3d(0,0,0)'
+						style.webkitTransform = 'translate3d(0,0,0)'
+
+## Move
+
+		move: (event) =>
+
+			@moving = true
 
 ## getTile
 
@@ -225,8 +247,8 @@ Define flipped (expanded) tile size
 
 				"""
 					.#{@options.classNames.tileFlipped} {
-						height: #{height}px;
-						width: #{width}px;
+						height: 100%;
+						width: 100%;
 					}
 				"""
 			]

@@ -18,6 +18,7 @@
   "dependencies": {
     "color-scheme": "0.0.5",
     "napa": "~0.1.1",
-    "tranny": "0.0.3"
+    "tranny": "0.0.3",
+    "textwidth": "~1.0.0"
   }
 }
