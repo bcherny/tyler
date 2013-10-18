@@ -1,7 +1,4 @@
 
-# requires
-Tyler = require 'Tyler'
-
 # params
 element = document.body
 data = [

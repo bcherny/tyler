@@ -1,10 +1,4 @@
-
 # Tyler
-
-## requires
-
-	ColorScheme = require 'ColorScheme'
-	#TextWidth = require 'textwidth'
 
 ## helpers
 
@@ -48,7 +42,7 @@
 		"""
 			<div class="tile tile-#{@size}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
 				<div class="tile-inner">
-					<div class="tile-front sex-#{@sex}" style="background-color:##{@color};background-image:url(#{@pic})"><span class="name">#{@name}</span>
+					<div class="tile-front sex-#{@sex}" style="background-image:url(#{@pic})"><span class="name">#{@name}</span>
 					</div>
 					<div class="tile-back"></div>
 				</div>
@@ -58,6 +52,8 @@
 ## Tyler
 
 	class Tyler
+
+		tranny: new Tranny
 
 ## default options
 
@@ -149,7 +145,7 @@ Triggered when a tile is clicked/tapped
 
 Align it with the top left of the viewport
 
-						left = tile.offsetLeft - document.body.scrollLeft
+						left = document.body.scrollLeft - tile.offsetLeft
 						top = tile.offsetTop - document.body.scrollTop
 
 						style.webkitTransform = "rotateX(180deg) translate3d(#{left}px,#{top}px,0)"
@@ -281,12 +277,6 @@ Render tiles in the DOM
 
 Generate colors for tiles
 
-				color = new ColorScheme
-				colors = color
-					.from_hue(230)
-					.scheme('mono')
-					.variation('hard')
-					.colors()
 				html = ''
 
 				for item in layout
@@ -295,12 +285,10 @@ Generate colors for tiles
 
 					if rand > .7
 						html += _.template template, _.extend item,
-							color: _.rand colors
 							size: 'big'
 
 					else
 						html += _.template template, _.extend item,
-							color: _.rand colors
 							size: 'big'
 
 				element.innerHTML = html
