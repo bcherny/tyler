@@ -80,6 +80,11 @@ Set options
 
 			_.extend @options, options
 
+Initialize model
+
+			@model = new umodel
+				moving: false # to prevent click being fired when user is scrolling
+
 Create a CSS rue to properly size tiles
 
 			@setCSS()
@@ -108,10 +113,10 @@ Triggered when a tile is clicked/tapped
 
 		click: (event) =>
 
-			if @moving
+			if @model.get 'moving'
 
 				event.preventDefault()
-				@moving = false
+				@model.set 'moving', false
 
 			else
 
@@ -142,7 +147,7 @@ Or reset if previously aligned
 
 		move: (event) =>
 
-			@moving = true
+			@model.set 'moving', true
 
 ## getTile
 
@@ -178,13 +183,9 @@ Compute
 			width = window.innerWidth
 			size = width / @options.columns
 
-Store sizes for `@layout` computations
+Store tile size for `@layout` computations
 
-			@sizes =
-				tile: size
-				window:
-					height: height
-					width: width
+			@model.set 'size', size
 
 Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule insertion works.
 
@@ -240,12 +241,14 @@ Compute layout according to our parameters, filtered through a bayesian distribu
 
 			_.sortBy data, 'weight'
 
+			size = @model.get 'size'
+
 			for tile, n in data
 
 				datum =
 					id: n
-					x: @sizes.tile * (n % 2)
-					y: @sizes.tile * Math.floor(n / @options.columns)
+					x: size * (n % 2)
+					y: size * Math.floor(n / @options.columns)
 
 				_.extend tile, datum
 
