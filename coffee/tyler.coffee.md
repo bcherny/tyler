@@ -122,24 +122,7 @@ Triggered when a tile is clicked/tapped
 
 				if tile
 
-					style = tile.querySelector('.tile-inner').style
-
 					tile.classList.toggle @options.classNames.tileFlipped
-
-					if tile.classList.contains @options.classNames.tileFlipped
-
-Align it with the top left of the viewport
-
-						left = -tile.offsetLeft
-						top = tile.offsetTop - document.body.scrollTop
-
-						style.webkitTransform = "rotateX(180deg) translate3d(#{left}px,#{top}px,0)"
-
-Or reset if previously aligned
-
-					else
-
-						style.webkitTransform = 'rotateX(0) translate3d(0,0,0)'
 
 ## Move
 
@@ -219,12 +202,12 @@ Define small tile size
 
 Define flipped (expanded) tile size
 
-				"""
-					.#{@options.classNames.tileFlipped} {
-						height: 100%;
-						width: 100%;
-					}
-				"""
+				#"""
+				#	.#{@options.classNames.tileFlipped} {
+				#		height: 100%;
+				#		width: 100%;
+				#	}
+				#"""
 			]
 
 Append rules to stylesheet

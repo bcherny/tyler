@@ -8,12 +8,13 @@
 
 		.tile-inner
 			z-index 4
-			//-webkit-transform rotateX(180deg)
+			-webkit-animation Flip 1s forwards
 
 .tile-inner
 	height 100%
 	position relative
 	width 100%
+	-webkit-animation Unflip 1s
 	-webkit-transform-style preserve-3d
 
 .tile-front
@@ -42,3 +43,19 @@
 	position absolute
 	bottom 0
 	left 0
+
+@-webkit-keyframes Flip
+
+	0%
+		-webkit-transform rotateX(0)
+
+	100%
+		-webkit-transform rotateX(180deg)
+
+@-webkit-keyframes Unflip
+
+	0%
+		-webkit-transform rotateX(180deg)
+
+	100%
+		-webkit-transform rotateX(0)
