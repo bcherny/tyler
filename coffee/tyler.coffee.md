@@ -35,8 +35,6 @@
 
 	class Tyler
 
-		tranny: new Tranny
-
 ## default options
 
 		options:
@@ -132,7 +130,7 @@ Triggered when a tile is clicked/tapped
 
 Align it with the top left of the viewport
 
-						left = document.body.scrollLeft - tile.offsetLeft
+						left = -tile.offsetLeft
 						top = tile.offsetTop - document.body.scrollTop
 
 						style.webkitTransform = "rotateX(180deg) translate3d(#{left}px,#{top}px,0)"
