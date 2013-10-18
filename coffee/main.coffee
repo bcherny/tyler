@@ -1,6 +1,5 @@
 
 # params
-element = document.body
 data = [
 	{
 		name: 'John B'
@@ -57,20 +56,20 @@ data = [
 		pic: 'img/tara self pic.jpg'
 	}
 ]
-options =
+# options =
 
-	# careful when overriding!!!
-	template: ->
+# 	# careful when overriding!!!
+# 	template: ->
 
-		"""
-			<div class="tile tile-#{@size}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
-				<div class="tile-inner">
-					<div class="tile-front sex-#{@sex}" style="background-image:url(#{@pic})"><span class="name">#{@name}</span>
-					</div>
-					<div class="tile-back"></div>
-				</div>
-			</div>
-		"""
+# 		"""
+# 			<div class="tile tile-#{@size}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
+# 				<div class="tile-inner">
+# 					<div class="tile-front sex-#{@sex}" style="background-image:url(#{@pic})"><span class="name">#{@name}</span>
+# 					</div>
+# 					<div class="tile-back"></div>
+# 				</div>
+# 			</div>
+# 		"""
 
 # init!
-tyler = new Tyler data, element, options
+tyler = new Tyler data, document.body

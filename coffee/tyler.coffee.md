@@ -22,11 +22,6 @@
 
 			array.sort fn
 
-		rand: (array) ->
-
-			index = Math.floor Math.random() * array.length
-			array[index]
-
 		template: (template, data = {}) ->
 
 			template.call data
@@ -43,9 +38,19 @@ Number of big tiles that should fit side-by-side
 
 			columns: 2
 
-Frequency (in ms) to check for resize, in order to properly adjust fullscreen size
+Template for tiles
 
-			checkForResizeEvery: 400
+			template: ->
+
+				"""
+					<div class="tile" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
+						<div class="tile-inner">
+							<div class="tile-front sex-#{@sex}" style="background-image:url(#{@pic})"><span class="name">#{@name}</span>
+							</div>
+							<div class="tile-back"></div>
+						</div>
+					</div>
+				"""
 
 ### Classes for DOM elements
 
@@ -53,8 +58,6 @@ Frequency (in ms) to check for resize, in order to properly adjust fullscreen si
 
 				cellFocused: 'focus'
 				tile: 'tile'
-				tileBig: 'tile-big'
-				tileSmall: 'tile-small'
 				tileFlipped: 'flipped'
 				tileInner: 'tile-inner'
 
@@ -81,7 +84,7 @@ Set options
 Initialize model
 
 			@model = new umodel
-				moving: false # to prevent click being fired when user is scrolling
+				moving: false # prevents click from being fired when user is scrolling
 
 Create a CSS rue to properly size tiles
 
@@ -154,7 +157,7 @@ Checks if a DOMElement is a tile.
 
 ## setCSS
 
-Tiles should be square, and exactly **two** big ones should fit side-by-side. That number can be overwritten in `options.columns`.
+Tiles should be square, and exactly **two** should fit side-by-side. That number can be overwritten in `options.columns`.
 
 		setCSS: ->
 
@@ -164,56 +167,26 @@ Compute
 			width = window.innerWidth
 			size = width / @options.columns
 
-Store tile size for `@layout` computations
+Define CSS transition based on `options`, tile size based on window dimensions
 
-			@model.set 'size', size
-
-Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule insertion works.
-
-			sheet = document.styleSheets[0]
-			rules = [
-
-Define CSS transition based on `options`
-
+			rule =
 				"""
 					.#{@options.classNames.tile},
 					.#{@options.classNames.tileInner} {
+						height: #{size}px;
+						width: #{size}px;
 						-webkit-transition: all #{@options.animation.duration}ms #{@options.animation.fn}
 					}
 				"""
 
-Define big tile size
-
-				"""
-					.#{@options.classNames.tileBig} {
-						height: #{size}px;
-						width: #{size}px;
-					}
-				"""
-
-Define small tile size
-
-				"""
-					.#{@options.classNames.tileSmall} {
-						height: #{size / 2}px;
-						width: #{size / 2}px;
-					}
-				"""
-
-Define flipped (expanded) tile size
-
-				#"""
-				#	.#{@options.classNames.tileFlipped} {
-				#		height: 100%;
-				#		width: 100%;
-				#	}
-				#"""
-			]
-
-Append rules to stylesheet
+Append to the DOM. See http://stackoverflow.com/a/707794/435124 for how CSS rule insertion works
 			
-			for rule in rules
-				sheet.insertRule rule, sheet.cssRules.length
+			sheet = document.styleSheets[0]
+			sheet.insertRule rule, sheet.cssRules.length
+
+Store tile size for `@layout` computations
+
+			@model.set 'size', size
 
 ## layout
 Compute layout according to our parameters, filtered through a bayesian distribution.
@@ -241,32 +214,13 @@ Render tiles in the DOM
 
 			if layout.length
 
-Generate colors for tiles
+Generate tile HTML
 
 				html = ''
 
 				for item in layout
+					html += _.template @options.template, item
 
-					rand = Math.rand
-
-					if rand > .7
-						html += _.template @options.template, _.extend item,
-							size: 'big'
-
-					else
-						html += _.template @options.template, _.extend item,
-							size: 'big'
+Render!
 
 				element.innerHTML = html
-
-Wrap with UMD (play nice with AMD, CommonJS, Node, and globals)
-
-	umd = (name, factory) ->
-		if typeof exports is 'object'
-			module.exports = factory
-		else if typeof define is 'function' and define.amd
-			define name, -> factory
-		else
-			@[name] = factory
-
-	umd 'Tyler', Tyler
