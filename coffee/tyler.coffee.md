@@ -118,9 +118,6 @@ Attach DOM events
 
 			@addEventListeners()
 
-			#TextWidth.define 'name', document.querySelector('.name')[0]
-			#console.log TextWidth.get 'name', 'john'
-
 		addEventListeners: ->
 
 			document.addEventListener 'click', @click
