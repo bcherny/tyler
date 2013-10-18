@@ -16,12 +16,8 @@
 		sortBy: (array, property) ->
 
 			number = typeof array[0][property] is 'number'
-
-			_alpha = (property) ->
-				(a, b) -> a[property].localeCompare b[property]
-			_numeric = (property) ->
-				(a, b) -> a[property] < b[property]
-
+			_alpha = (property) -> (a, b) -> a[property].localeCompare b[property]
+			_numeric = (property) -> (a, b) -> a[property] < b[property]
 			fn = (if number then _numeric else _alpha) property
 
 			array.sort fn
@@ -34,20 +30,6 @@
 		template: (template, data = {}) ->
 
 			template.call data
-
-## Template for tiles
-
-	template = ->
-
-		"""
-			<div class="tile tile-#{@size}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
-				<div class="tile-inner">
-					<div class="tile-front sex-#{@sex}" style="background-image:url(#{@pic})"><span class="name">#{@name}</span>
-					</div>
-					<div class="tile-back"></div>
-				</div>
-			</div>
-		"""
 
 ## Tyler
 
@@ -284,11 +266,11 @@ Generate colors for tiles
 					rand = Math.rand
 
 					if rand > .7
-						html += _.template template, _.extend item,
+						html += _.template @options.template, _.extend item,
 							size: 'big'
 
 					else
-						html += _.template template, _.extend item,
+						html += _.template @options.template, _.extend item,
 							size: 'big'
 
 				element.innerHTML = html

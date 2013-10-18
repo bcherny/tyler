@@ -59,24 +59,18 @@ data = [
 ]
 options =
 
-	back:
+	# careful when overriding!!!
+	template: ->
 
-		className: (data) ->
-			''
-
-		template: (data) ->
-			"""
-			"""
-
-	front:
-
-		className: (data) ->
-			'sex-' + data.sex
-
-		template: (data) ->
-			"""
-				#{data.name}
-			"""
+		"""
+			<div class="tile tile-#{@size}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
+				<div class="tile-inner">
+					<div class="tile-front sex-#{@sex}" style="background-image:url(#{@pic})"><span class="name">#{@name}</span>
+					</div>
+					<div class="tile-back"></div>
+				</div>
+			</div>
+		"""
 
 # init!
 tyler = new Tyler data, element, options
