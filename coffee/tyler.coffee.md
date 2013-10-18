@@ -40,16 +40,29 @@ Number of big tiles that should fit side-by-side
 
 Template for tiles
 
-			template: ->
+			templateWrap: ->
 
 				"""
 					<div class="tile" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
 						<div class="tile-inner">
-							<div class="tile-front sex-#{@sex}" style="background-image:url(#{@pic})"><span class="name">#{@name}</span>
-							</div>
-							<div class="tile-back"></div>
+							#{@front}
+							#{@back}
 						</div>
 					</div>
+				"""
+
+			templateFront: ->
+
+				"""
+					<div class="tile-front" style="background-image:url(#{@pic})">
+						<span class="name">#{@name}</span>
+					</div>
+				"""
+				
+			templateBack: ->
+
+				"""
+					<div class="tile-back"></div>
 				"""
 
 ### Classes for DOM elements
@@ -75,7 +88,7 @@ CSS transition timing function, see http://www.w3.org/TR/css3-transitions/#singl
 
 ## initialize
 
-		constructor: (data, element, options) ->
+		constructor: (data = {}, element = document.body, options) ->
 
 Set options
 
@@ -219,7 +232,11 @@ Generate tile HTML
 				html = ''
 
 				for item in layout
-					html += _.template @options.template, item
+					front = _.template @options.templateFront, item
+					back = _.template @options.templateBack, item
+					html += _.template @options.templateWrap, _.extend item,
+						front: front
+						back: back
 
 Render!
 
