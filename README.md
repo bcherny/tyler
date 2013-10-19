@@ -2,6 +2,10 @@
 
 Metro-style tiling UI implemented in CSS (Webkit only!)
 
+## demo
+
+http://performancejs.com/tyler/
+
 ## usage
 
 ```js
