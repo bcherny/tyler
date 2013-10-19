@@ -32,7 +32,7 @@
 
 ## Tyler
 
-	class Tyler
+	class tyler
 
 ## default options
 

@@ -109,3 +109,10 @@ options = {
 		fn: 'ease-out'
 }
 ```
+
+# building it yourself
+
+```bash
+npm install
+grunt
+```
