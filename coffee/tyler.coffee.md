@@ -90,7 +90,7 @@ CSS transition timing function, see http://www.w3.org/TR/css3-transitions/#singl
 
 ## initialize
 
-		constructor: (data = {}, element = document.body, options) ->
+		constructor: (data = {}, @element = document.body, options) ->
 
 Set options
 
@@ -111,7 +111,7 @@ Compute the layout
 
 Render it
 
-			@render layout, element
+			@render layout
 
 Attach DOM events
 
@@ -178,8 +178,8 @@ Tiles should be square, and exactly **two** should fit side-by-side. That number
 
 Compute 
 			
-			height = window.innerHeight
-			width = window.innerWidth
+			height = @element.offsetHeight
+			width = @element.offsetWidth
 			size = width / @options.columns
 
 Define CSS transition based on `options`, tile size based on window dimensions
@@ -224,7 +224,7 @@ Compute layout according to our parameters, filtered through a bayesian distribu
 
 Render tiles in the DOM
 
-		render: (layout, element) ->
+		render: (layout) ->
 
 			if layout.length
 
@@ -241,4 +241,4 @@ Generate tile HTML
 
 Render!
 
-				element.innerHTML = html
+				@element.innerHTML = html

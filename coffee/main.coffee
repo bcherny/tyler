@@ -25,4 +25,4 @@ options =
 		"""
 
 # init!
-tyler = new Tyler data, document.body, options
+tyler = new Tyler data, document.querySelector('#tyler'), options
