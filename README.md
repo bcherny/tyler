@@ -5,7 +5,7 @@ Metro-style tiling UI implemented in CSS (Webkit only!)
 ## usage
 
 ```js
-new Tyler(data, element, options)
+new tyler(data, element, options)
 ```
 
 ## basic example
@@ -46,7 +46,7 @@ Then initialize Tyler with a final `<script>` (be sure to link to it *after* Tyl
 	<script src="dependencies/umodel.js"></script>
 	<script src="tyler.js"></script>
 	<script>
-		new Tyler([
+		new tyler([
 			{ name: 'Foo', weight: .9 },
 			{ name: 'Bar', weight: .4 },
 			{ name: 'Baz', weight: .7 }
