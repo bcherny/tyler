@@ -47,7 +47,7 @@ Template for tiles
 			templateWrap: ->
 
 				"""
-					<div class="#{@classNames.tile}" style="left:#{@x}px;top:#{@y}px" data-tyler-id="#{@id}">
+					<div class="#{@classNames.tile}" style="left:#{@x}px;top:#{@y}px">
 						<div class="tile-inner">
 							#{@front}
 							#{@back}
@@ -214,7 +214,6 @@ Compute layout according to our parameters, filtered through a bayesian distribu
 			for tile, n in data
 
 				datum =
-					id: n
 					x: size * (n % 2)
 					y: size * Math.floor(n / @options.columns)
 
