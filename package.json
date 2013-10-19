@@ -1,11 +1,8 @@
 {
   "name": "tyler",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Metro-style tiling UI implemented in CSS",
-  "main": "coffee/tyler.coffee",
-  "scripts": {
-    "install": "napa timjansen/sparkplug.js"
-  },
+  "main": "js/tyler.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:eighttrackmind/tyler.git"
@@ -16,9 +13,20 @@
     "url": "https://github.com/eighttrackmind/tyler/issues"
   },
   "dependencies": {
-    "color-scheme": "0.0.5",
-    "napa": "~0.1.1",
-    "tranny": "0.0.3",
-    "textwidth": "~1.0.0"
+    "umodel": "0.0.x"
+  },
+  "keywords": [
+    "metro",
+    "tile",
+    "user",
+    "interface",
+    "pane",
+    "square"
+  ],
+  "devDependencies": {
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-umd": "~1.3.0",
+    "grunt": "~0.4.1"
   }
 }

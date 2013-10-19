@@ -99,7 +99,8 @@ Set options
 Initialize model
 
 			@model = new umodel
-				moving: false # prevents click from being fired when user is scrolling
+				moving: false	# prevents click from being fired when user is scrolling
+				size: 0			# cache tile size
 
 Create a CSS rue to properly size tiles
 

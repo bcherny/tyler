@@ -8,7 +8,7 @@ Metro-style tiling UI implemented in CSS (Webkit only!)
 new Tyler(data, element, options)
 ```
 
-## full example
+## basic example
 
 Add `tyler.css` to your page's `<head>`:
 
@@ -21,7 +21,7 @@ Add `tyler.css` to your page's `<head>`:
 </html>
 ```
 
-Add `tyler.js` and its dependencies to the bottom of your `<body>` (or load with any CommonJS or AMD-compatible module loader):
+Add `tyler.js` and its dependency, `umodel`, to the bottom of your `<body>` (or load with any CommonJS or AMD-compatible module loader):
 
 ```html
 <html>
@@ -29,8 +29,6 @@ Add `tyler.js` and its dependencies to the bottom of your `<body>` (or load with
 	<link rel="stylesheet" href="css/tyler.css" />
 </head>
 <body>
-	<script src="dependencies/matrix-utilities.js"></script>
-	<script src="dependencies/transform-to-matrix.js"></script>
 	<script src="dependencies/umodel.js"></script>
 	<script src="tyler.js"></script>
 </body>
@@ -45,8 +43,6 @@ Then initialize Tyler with a final `<script>` (be sure to link to it *after* Tyl
 	<link rel="stylesheet" href="css/tyler.css" />
 </head>
 <body>
-	<script src="dependencies/matrix-utilities.js"></script>
-	<script src="dependencies/transform-to-matrix.js"></script>
 	<script src="dependencies/umodel.js"></script>
 	<script src="tyler.js"></script>
 	<script>
