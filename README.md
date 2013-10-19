@@ -72,18 +72,18 @@ options = {
 
 	/*
 		{Function} a template that returns a string
-		HTML template for the front of a tile, receives any data from the `data` object passed when Tyler is instantiated
+		HTML template for the front of a tile, bound to any data from the `data` object passed when Tyler is instantiated
 	 */
 	templateFront: function(){
-		return '<div class="tile-front">' + @foo + '</div>'
+		return '<div class="tile-front">' + this.foo + '</div>'
 	},
 
 	/*
 		{Function} a template that returns a string
-		HTML template for the back of a tile, receives any data from the `data` object passed when Tyler is instantiated
+		HTML template for the back of a tile, bound to any data from the `data` object passed when Tyler is instantiated
 	 */
 	templateBack: function(){
-		return '<div class="tile-back">' + @bar + '</div>'
+		return '<div class="tile-back">' + this.bar + '</div>'
 	},
 
 	classNames: {
