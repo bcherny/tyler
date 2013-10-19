@@ -1,7 +1,19 @@
+$back = #0A70A2
+$front = #1BA1E2 // see http://stackoverflow.com/a/11579376/435124
+$text = rgba(255,255,255,.7)
+
 .tile
+	border solid $back
+	margin-top -1px
 	position absolute
 	-webkit-backface-visibility hidden
 	-webkit-perspective 1000
+
+	&:nth-child(even)
+		border-width 1px 0 0 1px
+
+	&:nth-child(odd)
+		border-width 1px 0 0 0
 
 	&.flipped
 		z-index 3
@@ -29,15 +41,15 @@
 	-webkit-backface-visibility hidden
 
 .tile-front
-	background-color #1BA1E2 // see http://stackoverflow.com/a/11579376/435124
+	background-color $front
 	z-index 2
 
 .tile-back
-	background #0A70A2
+	background $back
 	-webkit-transform rotateX(180deg)
 
 .name
-	color rgba(255,255,255,.7)
+	color $text
 	display block
 	font-size 30px
 	padding 0 3px
