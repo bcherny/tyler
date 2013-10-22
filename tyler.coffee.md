@@ -139,7 +139,8 @@ Compute the layout
 
 Render it
 
-			@render layout
+			if layout
+				@render layout
 
 ## Click
 

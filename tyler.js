@@ -109,7 +109,9 @@ tyler = (function() {
   tyler.prototype.data = function(data) {
     var layout;
     layout = this.layout(data);
-    return this.render(layout);
+    if (layout) {
+      return this.render(layout);
+    }
   };
 
   tyler.prototype.click = function(event) {
