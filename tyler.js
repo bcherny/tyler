@@ -53,6 +53,12 @@ _ = {
       data = {};
     }
     return template.call(data);
+  },
+  one: function(collection) {
+    var id;
+    for (id in collection) {
+      return id;
+    }
   }
 };
 
@@ -79,10 +85,6 @@ tyler = (function() {
   };
 
   function tyler(data, element, options) {
-    var layout;
-    if (data == null) {
-      data = {};
-    }
     this.element = element != null ? element : document.body;
     this.move = __bind(this.move, this);
     this.click = __bind(this.click, this);
@@ -92,8 +94,9 @@ tyler = (function() {
       size: 0
     });
     this.setCSS();
-    layout = this.layout(data);
-    this.render(layout);
+    if (data) {
+      this.data(data);
+    }
     this.addEventListeners();
   }
 
@@ -101,6 +104,12 @@ tyler = (function() {
     document.addEventListener('click', this.click);
     document.addEventListener('touchend', this.click);
     return document.addEventListener('touchmove', this.move);
+  };
+
+  tyler.prototype.data = function(data) {
+    var layout;
+    layout = this.layout(data);
+    return this.render(layout);
   };
 
   tyler.prototype.click = function(event) {
@@ -148,6 +157,9 @@ tyler = (function() {
 
   tyler.prototype.layout = function(data) {
     var datum, n, size, tile, _i, _len, _results;
+    if (!data || typeof _.one(data) === 'undefined') {
+      return;
+    }
     _.sortBy(data, 'weight');
     size = this.model.get('size');
     _results = [];

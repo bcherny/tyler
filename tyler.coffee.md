@@ -30,6 +30,12 @@
 
 			template.call data
 
+return the first key in an object (order not guaranteed, as objects are automatically sorted by key in some browsers)
+
+		one: (collection) ->
+
+			return id for id of collection
+
 ## Tyler
 
 	class tyler
@@ -90,7 +96,7 @@ CSS transition timing function, see http://www.w3.org/TR/css3-transitions/#singl
 
 ## initialize
 
-		constructor: (data = {}, @element = document.body, options) ->
+		constructor: (data, @element = document.body, options) ->
 
 Set options
 
@@ -106,13 +112,10 @@ Create a CSS rue to properly size tiles
 
 			@setCSS()
 
-Compute the layout
+Set data?
 
-			layout = @layout data
-
-Render it
-
-			@render layout
+			if data
+				@data data
 
 Attach DOM events
 
@@ -123,6 +126,20 @@ Attach DOM events
 			document.addEventListener 'click', @click
 			document.addEventListener 'touchend', @click
 			document.addEventListener 'touchmove', @move
+
+## Data
+
+Set data (triggers layout)
+
+		data: (data) ->
+
+Compute the layout
+
+			layout = @layout data
+
+Render it
+
+			@render layout
 
 ## Click
 
@@ -207,6 +224,9 @@ Store tile size for `@layout` computations
 Compute layout according to our parameters, filtered through a bayesian distribution.
 
 		layout: (data) ->
+
+			if not data or typeof _.one(data) is 'undefined'
+				return
 
 			_.sortBy data, 'weight'
 
