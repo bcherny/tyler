@@ -48,6 +48,11 @@ Number of big tiles that should fit side-by-side
 
 			columns: 2
 
+Offset for tiles
+
+			offsetX: 0
+			offsetY: 0
+
 Template for tiles
 
 			templateWrap: ->
@@ -236,8 +241,8 @@ Compute layout according to our parameters, filtered through a bayesian distribu
 			for tile, n in data
 
 				datum =
-					x: size * (n % 2)
-					y: size * Math.floor(n / @options.columns)
+					x: size * (n % 2) + @options.offsetX
+					y: size * Math.floor(n / @options.columns) + @options.offsetY
 
 				_.extend tile, datum
 

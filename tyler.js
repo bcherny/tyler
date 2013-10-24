@@ -65,6 +65,8 @@ _ = {
 tyler = (function() {
   tyler.prototype.options = {
     columns: 2,
+    offsetX: 0,
+    offsetY: 0,
     templateWrap: function() {
       return "<div class=\"" + this.classNames.tile + "\" style=\"left:" + this.x + "px;top:" + this.y + "px\">\n	<div class=\"tile-inner\">\n		" + this.front + "\n		" + this.back + "\n	</div>\n</div>";
     },
@@ -168,8 +170,8 @@ tyler = (function() {
     for (n = _i = 0, _len = data.length; _i < _len; n = ++_i) {
       tile = data[n];
       datum = {
-        x: size * (n % 2),
-        y: size * Math.floor(n / this.options.columns)
+        x: size * (n % 2) + this.options.offsetX,
+        y: size * Math.floor(n / this.options.columns) + this.options.offsetY
       };
       _results.push(_.extend(tile, datum));
     }
