@@ -53,6 +53,10 @@ Offset for tiles
 			offsetX: 0
 			offsetY: 0
 
+Whether or not tiles should be flippable
+
+			flippable: true
+
 Template for tiles
 
 			templateWrap: ->
@@ -187,7 +191,11 @@ Triggered when a tile is clicked/tapped
 
 				if tile
 
-					tile.classList.toggle @options.classNames.tileFlipped
+Flip tile?
+
+					if @options.flippable
+
+						tile.classList.toggle @options.classNames.tileFlipped
 
 Trigger events?
 
@@ -291,7 +299,7 @@ Generate tile HTML
 
 				for item in layout
 					front = _.template @options.templateFront, item
-					back = _.template @options.templateBack, item
+					back = if @options.flippable then _.template @options.templateBack, item else ''
 					html += _.template @options.templateWrap, _.extend item, @options,
 						front: front
 						back: back
