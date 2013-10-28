@@ -47,4 +47,4 @@ options = {
   }
 };
 
-new tyler(data, document.querySelector('#tyler'), options);
+tyl = new tyler(data, document.querySelector('#tyler'), options);

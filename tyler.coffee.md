@@ -110,6 +110,7 @@ Set options
 Initialize model
 
 			@model = new umodel
+				events: {}
 				moving: false	# prevents click from being fired when user is scrolling
 				size: 0			# cache tile size
 
@@ -125,6 +126,28 @@ Set data?
 Attach DOM events
 
 			@addEventListeners()
+
+## on
+
+Interface to attach events
+
+		on: (event, handler) ->
+
+			key = "events/#{event}"
+
+Lazy create array of callbacks
+
+			if @model.get(key) is undefined
+				@model.set key, []
+
+Push it
+
+			events = @model.get key
+			events.push handler
+
+## addEventListeners
+
+Attaches DOM events
 
 		addEventListeners: ->
 
@@ -165,6 +188,8 @@ Triggered when a tile is clicked/tapped
 				if tile
 
 					tile.classList.toggle @options.classNames.tileFlipped
+
+
 
 ## Move
 
