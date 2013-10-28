@@ -71,6 +71,21 @@ options = {
 	columns: 2,
 
 	/*
+		{Number} visual horizontal offset for tiles
+	 */
+	offsetX: 0,
+
+	/*
+		{Number} visual vertical offset for tiles
+	 */
+	offsetY: 0,
+
+	/*
+		{Boolean} whether or not tiles should be flippable
+	 */
+	flippable: true,
+
+	/*
 		{Function} a template that returns a string
 		HTML template for the front of a tile, bound to any data from the `data` object passed when Tyler is instantiated
 	 */
@@ -114,7 +129,29 @@ options = {
 }
 ```
 
-# building it yourself
+## methods
+
+```js
+tyl = new tyler()
+```
+
+### .data
+pass some data to tyler, overiding any existing data and forcing a re-render
+
+```js
+tyl.data({ ... })
+```
+
+### .on
+call a function when a view event is triggered (currently only supports `click`)
+
+```js
+tyl.on('click', function (tileElement, event) {
+	// this = tyler instance
+});
+```
+
+## building it yourself
 
 ```bash
 npm install
