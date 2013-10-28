@@ -189,7 +189,13 @@ Triggered when a tile is clicked/tapped
 
 					tile.classList.toggle @options.classNames.tileFlipped
 
+Trigger events?
 
+					events = @model.get 'events/click'
+
+					if events and events[0]
+						for fn in events
+							fn.call @, tile, event
 
 ## Move
 
